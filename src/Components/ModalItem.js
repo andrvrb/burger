@@ -48,34 +48,43 @@ const HeaderContent = styled.div`
 `
 
 
-export const ModalItem = ({ openItem, setOpenItem }) => {
+export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
 
-    function closeModal(e) {
+    const closeModal = e => {
         if (e.target.id === 'overlay') {
             setOpenItem(null);
         }
     }
 
-    if (!openItem) return null;
-    
-    return ( 
-    <Overlay id="overlay" onClick={closeModal}>
-        
-        <Modal>
-            <Banner img={openItem.img}/>            
-            <Content>
-                <HeaderContent>
-                    <div>
-            <h2>{openItem.name}</h2>            
-                    </div>
-                    <div>
-            <h2>{openItem.price.toLocaleString('ru-RU',{style: 'currency', currency: 'RUB'})}</h2>
-                    </div>
-                </HeaderContent>
-                <ButtonCheckout>Добавить</ButtonCheckout>    
-            </Content> 
-        </Modal>
+    const order = {
+        ...openItem
+    };
 
-    </Overlay>
+    const addToOrder = () => {
+        setOrders([...orders, order])
+        setOpenItem(null);
+    }
+
+
+
+    return ( 
+        <Overlay id="overlay" onClick={closeModal}>
+        
+            <Modal>
+                <Banner img={openItem.img}/>            
+                <Content>
+                    <HeaderContent>
+                        <div>
+                <h2>{openItem.name}</h2>            
+                        </div>
+                        <div>
+                <h2>{openItem.price.toLocaleString('ru-RU',{style: 'currency', currency: 'RUB'})}</h2>
+                        </div>
+                    </HeaderContent>
+                    <ButtonCheckout onClick={addToOrder}>Добавить</ButtonCheckout>    
+                </Content> 
+            </Modal>
+
+        </Overlay>
     )
 };
