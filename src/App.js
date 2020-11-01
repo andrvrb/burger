@@ -1,11 +1,11 @@
 import React from 'react';
-import {GlobalStyle} from './Components/GlobalStyle';
-import {NavBar} from './Components/NavBar';
-import {Menu} from './Components/Menu';
-import {ModalItem} from './Components/ModalItem';
-import {Order} from './Components/Order';
-import {useOpenItem} from './Components/Hooks/useOpenItem';
-import {useOrders} from './Components/Hooks/useOrders';
+import {GlobalStyle} from './Components/Hooks/Style/GlobalStyle';
+import {NavBar} from './Components/Hooks/NavBar/NavBar';
+import {Menu} from './Components/Hooks/Menu/Menu';
+import {ModalItem} from './Components/Hooks/Modal/ModalItem';
+import {Order} from './Components/Hooks/Order/Order';
+import {useOpenItem} from './Components/Hooks/Order/useOpenItem';
+import {useOrders} from './Components/Hooks/Order/useOrders';
 
 
 function App() {
