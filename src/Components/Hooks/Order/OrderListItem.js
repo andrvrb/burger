@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import trashImage from '../../../image/trash.svg';
+import {totalPriceItems} from '../Modal/ModalItem'
 
 const OrderItemStyled = styled.li`
     display: flex;
@@ -33,8 +34,8 @@ const TrashButon = styled.button`
 export const OrderListItem = ({order}) => (
     <OrderItemStyled>
         <ItemName>{order.name}</ItemName>
-        <span>2</span>
-        <ItemPrice>{order.price.toLocaleString('ru-Ru', 
+        <span>{order.count}</span>
+        <ItemPrice>{totalPriceItems.toLocaleString('ru-Ru', 
         { style: 'currency', currency: 'RUB' })}</ItemPrice>
         <TrashButon/>
     </OrderItemStyled>

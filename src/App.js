@@ -4,8 +4,8 @@ import {NavBar} from './Components/Hooks/NavBar/NavBar';
 import {Menu} from './Components/Hooks/Menu/Menu';
 import {ModalItem} from './Components/Hooks/Modal/ModalItem';
 import {Order} from './Components/Hooks/Order/Order';
-import {useOpenItem} from './Components/Hooks/Order/useOpenItem';
-import {useOrders} from './Components/Hooks/Order/useOrders';
+import {useOpenItem} from './Components/Hooks/useOpenItem';
+import {useOrders} from './Components/Hooks/useOrders';
 
 
 function App() {

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import {ButtonCheckout} from "./ButtonCheckout";
+import {ButtonCheckout} from "../Style/ButtonCheckout";
+import {CountItem} from "./CountItem";
+import {useCount} from "../useCount";
 
 const Overlay = styled.div`
     position: fixed;
@@ -37,7 +39,7 @@ const Content = styled.section`
     justify-content: space-between;
     height: calc(100% - 200px);
     padding: 30px;
-`
+`;
 
 const HeaderContent = styled.div`
     display: flex;
@@ -45,10 +47,18 @@ const HeaderContent = styled.div`
     font-size: 20px;
     font-weight: 700;
     font-family: 'Pacifico',  cursive;
-`
+`;
 
+const TotalPriceItem = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const totalPriceItems = order => order.price * order.count;
 
 export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
+
+    const counter = useCount();
 
     const closeModal = e => {
         if (e.target.id === 'overlay') {
@@ -57,11 +67,12 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
     }
 
     const order = {
-        ...openItem
+        ...openItem,
+        count: counter.count
     };
 
     const addToOrder = () => {
-        setOrders([...orders, order])
+        setOrders([...orders, order]);
         setOpenItem(null);
     }
 
@@ -81,6 +92,12 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
                 <h2>{openItem.price.toLocaleString('ru-RU',{style: 'currency', currency: 'RUB'})}</h2>
                         </div>
                     </HeaderContent>
+                    <CountItem {...counter}/>
+                    <TotalPriceItem>
+                        <span>Цена:</span>
+                        <span>{totalPriceItems(order).toLocaleString('ru-Ru',
+                        {style: 'currency', currency: 'RUB'})}</span>
+                    </TotalPriceItem>
                     <ButtonCheckout onClick={addToOrder}>Добавить</ButtonCheckout>    
                 </Content> 
             </Modal>
