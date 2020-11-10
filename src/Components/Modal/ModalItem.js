@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import {ButtonCheckout} from "../Style/ButtonCheckout";
 import {CountItem} from "./CountItem";
-import {useCount} from "../useCount";
+import {useCount} from "../Hooks/useCount";
+import {totalPriceItems} from '../Functions/secondaryFunction'
+import {formatCurrency} from '../Functions/secondaryFunction'
+import {Toppings} from './Topings'
+import {useToppings} from '../Hooks/useTopings'
 
 const Overlay = styled.div`
     position: fixed;
@@ -54,11 +58,13 @@ const TotalPriceItem = styled.div`
     justify-content: space-between;
 `;
 
-export const totalPriceItems = order => order.price * order.count;
+
+/* -------------- */
 
 export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
 
     const counter = useCount();
+    const toppings = useToppings(openItem);
 
     const closeModal = e => {
         if (e.target.id === 'overlay') {
@@ -68,15 +74,14 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
 
     const order = {
         ...openItem,
-        count: counter.count
+        count: counter.count,
+        topping: toppings.toppings
     };
 
     const addToOrder = () => {
         setOrders([...orders, order]);
         setOpenItem(null);
     }
-
-
 
     return ( 
         <Overlay id="overlay" onClick={closeModal}>
@@ -85,18 +90,14 @@ export const ModalItem = ({ openItem, setOpenItem, orders, setOrders }) => {
                 <Banner img={openItem.img}/>            
                 <Content>
                     <HeaderContent>
-                        <div>
-                <h2>{openItem.name}</h2>            
-                        </div>
-                        <div>
-                <h2>{openItem.price.toLocaleString('ru-RU',{style: 'currency', currency: 'RUB'})}</h2>
-                        </div>
+                        <div>{openItem.name}</div>
+                        <div>{formatCurrency(openItem.price)}</div>
                     </HeaderContent>
                     <CountItem {...counter}/>
+                    {openItem.toppings && <Toppings {...toppings}/>}
                     <TotalPriceItem>
                         <span>Цена:</span>
-                        <span>{totalPriceItems(order).toLocaleString('ru-Ru',
-                        {style: 'currency', currency: 'RUB'})}</span>
+                        <span>{formatCurrency(totalPriceItems(order))}</span>
                     </TotalPriceItem>
                     <ButtonCheckout onClick={addToOrder}>Добавить</ButtonCheckout>    
                 </Content> 

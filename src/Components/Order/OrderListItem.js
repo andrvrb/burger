@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import trashImage from '../../../image/trash.svg';
-import {totalPriceItems} from '../Modal/ModalItem'
+import trashImage from '../../image/trash.svg';
+import {totalPriceItems} from '../Functions/secondaryFunction'
+import {formatCurrency} from '../Functions/secondaryFunction'
 
 const OrderItemStyled = styled.li`
     display: flex;
     margin: 15px 0;
+    flex-wrap: wrap;
 `;
 
 const ItemName = styled.span`
@@ -31,12 +33,24 @@ const TrashButon = styled.button`
     cursor: pointer;
 `;
 
-export const OrderListItem = ({order}) => (
+const Toppings = styled.div`
+    color: #9a9a9a;
+    font-size: 14px;
+    width: 100%;
+`;
+
+export const OrderListItem = ({order}) => {
+    const topping = order.topping.filter(item => item.checked)
+    .map(item => item.name)
+    .join(', ');
+    console.log(topping);
+    
+    return (
     <OrderItemStyled>
         <ItemName>{order.name}</ItemName>
         <span>{order.count}</span>
-        <ItemPrice>{totalPriceItems.toLocaleString('ru-Ru', 
-        { style: 'currency', currency: 'RUB' })}</ItemPrice>
+        <ItemPrice>{formatCurrency(totalPriceItems(order))}</ItemPrice>
         <TrashButon/>
+        {topping && <Toppings>Допы: {topping} </Toppings>}
     </OrderItemStyled>
-)
+)};
