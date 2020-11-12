@@ -21,8 +21,8 @@ export function useAuth(authFirebase) {
             } else {
                 setAuthentication(null);
             }
-        })// eslint-disable-next-line
-    }, [authentication]);
+        })
+    }, [auth, authentication]);
 
     return { authentication, logIn, logOut };
 
